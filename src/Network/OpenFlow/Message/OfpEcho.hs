@@ -2,8 +2,8 @@ module Network.OpenFlow.Message.OfpEcho where
 
 import qualified Data.ByteString as BS
 
-data OfpEcho
-    = OfpEcho
+data OfpEchoRequest
+    = OfpEchoRequest
     { echoPayload :: BS.ByteString
     }
 

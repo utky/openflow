@@ -16,10 +16,25 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Network.OpenFlow
+                       Network.OpenFlow.Message
+                       Network.OpenFlow.Decode
+                       Network.OpenFlow.Parser
+                       Network.OpenFlow.Encode
+  other-modules:       Network.OpenFlow.Message.OfpEcho
+                       Network.OpenFlow.Message.OfpExperimenter
+                       Network.OpenFlow.Message.OfpHeader
+                       Network.OpenFlow.Message.OfpHello
+                       Network.OpenFlow.Message.OfpPort
+                       Network.OpenFlow.Message.OfpType
+                       Network.OpenFlow.Parser.Word
+                       Network.OpenFlow.Parser.OfpMessage
+                       Network.OpenFlow.Parser.OfpType
+                       Network.OpenFlow.Parser.OfpHeader
+                       Network.OpenFlow.Parser.OfpEcho
   build-depends:       base >= 4.7 && < 5
                      , bytestring
                      , text
-                     -- , attoparsec
+                     , attoparsec
                      -- , network-simple-tls
                      -- , pipes-network-tls
   default-language:    Haskell2010
@@ -37,8 +52,11 @@ test-suite openflow-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , filepath
+                     , bytestring
                      , openflow
                      , hspec
+                     , QuickCheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 

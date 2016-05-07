@@ -7,13 +7,7 @@ This project is on work in progress.
 
 ### TODOs
 
-- [+] Basic data types
+- [ ] (wip) Basic data types
 - [ ] Parsers by attoparsec
 - [ ] Encoders
 - [ ] Sample controller using tls
-
-#### legend
-
-- `-` pending
-- `+` doing
-- `*` done

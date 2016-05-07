@@ -1,21 +1,32 @@
 module Network.OpenFlow.Message
-    ( OfpMessage(..) ) where
+    ( OfpMessage
+    , OfpHeader(..)
+    , OfpPayload(..)
+    ) where
 
-import           Network.OpenFlow.Message.OfpHeader (OfpHeader)
-
+import           Data.Word
+import qualified Data.ByteString as B
 import           Network.OpenFlow.Message.OfpHello (OfpHello)
-import           Network.OpenFlow.Message.OfpEcho (OfpEcho, OfpEchoReply)
+import           Network.OpenFlow.Message.OfpEcho (OfpEchoRequest, OfpEchoReply)
 
-data OfpMessage
-    = OfpMessage
-    { header :: OfpHeader
+
+type OfpMessage = OfpHeader
+
+type Xid = Word32
+
+data OfpHeader
+    = OfpHeader 
+    { version :: Word8
+    , length :: Word16
+    , xid :: Xid
     , payload :: OfpPayload
     }
 
 data OfpPayload
-    = Hello OfpHello
+    = Unknown B.ByteString
+    | Hello OfpHello
     -- | Error
-    | EchoRequest OfpEcho
+    | EchoRequest OfpEchoRequest
     | EchoReply OfpEchoReply
     -- | Experimenter
     -- Switch configuration messages
