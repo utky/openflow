@@ -3,6 +3,7 @@ module Network.OpenFlow.Parser.OfpMessage where
 import           Prelude hiding (take)
 import           Control.Monad (fail)
 import           Data.Word
+import qualified Data.ByteString as B
 import           Data.Attoparsec.ByteString
 import           Network.OpenFlow.Message (OfpMessage, OfpHeader(..), OfpPayload(..))
 import           Network.OpenFlow.Parser.Word (anyWord16, anyWord32)
@@ -11,8 +12,19 @@ import qualified Network.OpenFlow.Parser.OfpEcho as Echo
 ofpMessage :: Parser OfpMessage
 ofpMessage = ofpHeader
 
-lengthRemainder :: Word16 -> Word16
-lengthRemainder len = len - 8
+-- | Calculate payload length from length field.
+-- length - 8 (ofpHeader length)
+lengthRemainder :: Word16 -> Int
+lengthRemainder len = fromIntegral (len - 8)
+
+-- | fixedLength i p
+-- read i octets and use them as input for running parser p.
+fixedLength :: Int -> Parser a -> Parser a
+fixedLength len parser = do
+  bytes <- take len
+  case parseOnly (parser <* endOfInput) bytes of
+    Left err     -> parser <?> err
+    Right parsed -> return parsed
 
 ofpHeader :: Parser OfpHeader
 ofpHeader = do
@@ -20,13 +32,8 @@ ofpHeader = do
   typ <- anyWord8 <?> "OfpHeader type"
   len <- anyWord16 <?> "OfpHeader length"
   xid <- anyWord32 <?> "OfpHeader xid"
-  let readLength = fromIntegral (lengthRemainder len)
-  rest <- take readLength <?> ("OfpHeader payload: length " ++ (show readLength))
-  let payloadParser = (ofpPayload typ) <* endOfInput
-      parsedPayload = parseOnly payloadParser rest
-  case parsedPayload of
-    Left msg  -> fail msg
-    Right pld -> return $ OfpHeader ver len xid pld
+  pld <- fixedLength (lengthRemainder len) (ofpPayload typ)
+  return $ OfpHeader ver len xid pld
 
 ofpPayload :: Word8 -> Parser OfpPayload
 -- Hello

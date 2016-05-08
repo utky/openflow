@@ -23,5 +23,12 @@ spec = do
       withRaw "echo-request.raw" $ \bytes -> do
         match (decode bytes) $ \msg ->
           case msg of
-            (OfpHeader v l x (EchoRequest _)) -> True `shouldBe` True
+            (OfpHeader v l x (EchoRequest _)) -> l `shouldBe` 10
+            _ -> misparsed
+
+    it "can decode EchoReply" $ do
+      withRaw "echo-reply.raw" $ \bytes -> do
+        match (decode bytes) $ \msg ->
+          case msg of
+            (OfpHeader v l x (EchoReply _)) -> l `shouldBe` 10
             _ -> misparsed
