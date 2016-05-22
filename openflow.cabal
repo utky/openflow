@@ -27,9 +27,11 @@ library
                        Network.OpenFlow.Message.OfpPort
                        Network.OpenFlow.Message.OfpType
                        Network.OpenFlow.Parser.Word
+                       Network.OpenFlow.Parser.TLV
                        Network.OpenFlow.Parser.OfpMessage
                        Network.OpenFlow.Parser.OfpType
                        Network.OpenFlow.Parser.OfpHeader
+                       Network.OpenFlow.Parser.OfpHello
                        Network.OpenFlow.Parser.OfpEcho
   build-depends:       base >= 4.7 && < 5
                      , bytestring

@@ -8,8 +8,8 @@ type ExperimenterType = Word32
 
 data OfpExperimenter
     = OfpExperimenter 
-    { experimenter :: ExperimenterId
-    , expType :: ExperimenterType
-    , payload :: BS.ByteString
+    { ofpExperimenterId :: ExperimenterId
+    , ofpExperimenterType :: ExperimenterType
+    , ofpExperimenterPayload :: BS.ByteString
     }
 

@@ -2,12 +2,14 @@ module Network.OpenFlow.Message
     ( OfpMessage
     , OfpHeader(..)
     , OfpPayload(..)
+    , module Network.OpenFlow.Message.OfpHello
+    , module Network.OpenFlow.Message.OfpEcho
     ) where
 
 import           Data.Word
 import qualified Data.ByteString as B
-import           Network.OpenFlow.Message.OfpHello (OfpHello)
-import           Network.OpenFlow.Message.OfpEcho (OfpEchoRequest, OfpEchoReply)
+import           Network.OpenFlow.Message.OfpHello (OfpHello(..), OfpHelloElement(..))
+import           Network.OpenFlow.Message.OfpEcho (OfpEchoRequest(..), OfpEchoReply(..))
 
 
 type OfpMessage = OfpHeader
@@ -20,7 +22,7 @@ data OfpHeader
     , length :: Word16
     , xid :: Xid
     , payload :: OfpPayload
-    }
+    } deriving (Show)
 
 data OfpPayload
     = Unknown B.ByteString
@@ -63,3 +65,4 @@ data OfpPayload
     -- | SetAsync
     -- -- Metrics and rate limiters configuration messages
     -- | MeterMod
+    deriving (Show)

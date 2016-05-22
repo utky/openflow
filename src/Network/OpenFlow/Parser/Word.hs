@@ -14,11 +14,11 @@ anyWord16 :: Parser Word16
 anyWord16 = do
   f <- fmap fromIntegral anyWord8
   s <- fmap fromIntegral anyWord8
-  return $ shiftL 8 f .|. s
+  return $ shiftL f 8 .|. s
 
 anyWord32 :: Parser Word32
 anyWord32 = do
   f <- fmap fromIntegral anyWord16
   s <- fmap fromIntegral anyWord16
-  return $ shiftL 16 f .|. s
+  return $ shiftL f 16 .|. s
 

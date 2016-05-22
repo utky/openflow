@@ -32,3 +32,10 @@ spec = do
           case msg of
             (OfpHeader v l x (EchoReply _)) -> l `shouldBe` 10
             _ -> misparsed
+
+    it "can decode Hello" $ do
+      withRaw "hello.raw" $ \bytes -> do
+        match (decode bytes) $ \msg ->
+          case msg of
+            (OfpHeader v l x (Hello _)) -> l `shouldBe` 16
+            _ -> misparsed

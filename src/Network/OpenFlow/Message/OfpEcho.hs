@@ -4,10 +4,10 @@ import qualified Data.ByteString as BS
 
 data OfpEchoRequest
     = OfpEchoRequest
-    { echoPayload :: BS.ByteString
-    }
+    { echoRequestPayload :: BS.ByteString
+    } deriving (Show)
 
 data OfpEchoReply
     = OfpEchoReply
     { echoReplyPayload :: BS.ByteString
-    }
+    } deriving (Show)

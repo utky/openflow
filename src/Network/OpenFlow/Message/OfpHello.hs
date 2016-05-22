@@ -4,7 +4,9 @@ import Data.Word
 
 data OfpHello 
     = OfpHello
-    { elements :: [OfpHelloElementHeader]
-    }
+    { ofpHelloElements :: [OfpHelloElement]
+    } deriving (Show)
 
-data OfpHelloElementHeader = VersionBitmap { bitmaps :: [Word32] }
+data OfpHelloElement = OfpHelloVersionBitmap { ofpHelloVersionBitmaps :: Word32 }
+                     | UnknownHelloElement
+                     deriving (Show)
